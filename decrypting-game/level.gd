@@ -1,35 +1,48 @@
 extends Control
 
-func _ready() -> void:
-	
-	update()
+
 
 
 var sentences = [
-	"I love Moonshot",
-	"Moonshot forever",
-	"Hello moonshot",
-	"I love world"
+	"a b c",
+	"b c d",
+	"c d e",
+	"d e a",
+	"e a b",
+	"a b",
+	"a c",
+	"a d",
+	"c d",
+	"b e",
+	"d e"
 ]
 var words = {
-	"i" : "gn",
-	"love" : "mi",
-	"moonshot" : "yox",
-	"hello" : "forq",
-	"world" : "miar",
-	"forever" : "dalli"
+	"a" : "a",
+	"b" : "b",
+	"c" : "c",
+	"d" : "d",
+	"e" : "e"
 }
 
 var message1 = "I love moonshot"
 var message2 = "Hello world"
 var task = "Hello Moonshot"
+func _ready() -> void:
+	new_task()
+	update()
+
+func _process(delta: float) -> void:
+	if $Bar.scale.y > 0.05:
+		$Bar.scale.y -= delta / 10
+		
+
 
 func crypt(sentence : String):
 	var list = sentence.split(" ")
 	print(list)
 	var crypt = ""
 	for i in list:
-		crypt += words[i.to_lower()] + " "
+		crypt += words[(i.to_lower())] + " "
 	return (crypt.strip_edges())
 
 func decrypt(crypt : String):
@@ -57,22 +70,41 @@ func checkAnswer():
 	var answer = ($TextEdit.text).to_lower().strip_edges()
 	if correct_answer == answer:
 		Gs.points += 10 * Gs.multiplier
-		new_task()
+		$Bar.scale.y += 0.3
 	else:
 		Gs.lose_hp(1)
 		if Gs.lives <= 0:
 			$ColorRect.visible = true
+	$TextEdit.text = ""
 
 func new_task():
-	message1 = sentences.pick_random()
-	message2 = sentences.pick_random()
-	task = sentences.pick_random()
-	update()
+	sentences.shuffle()
 	
+	message1 = sentences[0]
+	message2 = sentences[1]
+	var known_words = message1.split(" ")
+	known_words.append_array(message2.split(" "))
+	var taskFound = false
+	var i = 2
+	while i < len(sentences) and not taskFound:
+		var good = true
+		for word in sentences[i].split(" "):
+			if word not in known_words:
+				good = false
+		if good:
+			print("good task")
+			taskFound = true
+			task = sentences[i]
+			update()
+		i+=1
+	if not taskFound:
+		print("somethin went wrong!!")
+		update()
+
 
 func _on_submit_pressed() -> void:
 	checkAnswer()
-	update()
+	new_task()
 
 
 
