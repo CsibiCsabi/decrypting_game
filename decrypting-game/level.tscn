@@ -1,0 +1,121 @@
+[gd_scene load_steps=2 format=3 uid="uid://cskiiade72tp"]
+
+[ext_resource type="Script" uid="uid://tmprijewjdgt" path="res://level.gd" id="1_u52ul"]
+
+[node name="Level" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u52ul")
+
+[node name="English1" type="Label" parent="."]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 75.0
+offset_right = 244.0
+offset_bottom = 98.0
+text = "DECRYPTED SENTENCE"
+
+[node name="Gibberish1" type="Label" parent="."]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 103.0
+offset_right = 253.0
+offset_bottom = 126.0
+text = "ENGLISH SENTENCE"
+
+[node name="English2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 76.0
+offset_right = 501.0
+offset_bottom = 99.0
+text = "DECRYPTED SENTENCE"
+
+[node name="Gibberish2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 324.0
+offset_top = 107.0
+offset_right = 499.0
+offset_bottom = 130.0
+text = "DECRYPTED SENTENCE"
+
+[node name="Task" type="Label" parent="."]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 224.0
+offset_right = 404.0
+offset_bottom = 247.0
+text = "ENGLISH SENTENCE"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 283.0
+offset_right = 407.0
+offset_bottom = 333.0
+placeholder_text = "ANSWER"
+
+[node name="Submit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 360.0
+offset_right = 336.0
+offset_bottom = 391.0
+text = "SUBMIT!"
+
+[node name="Hp" type="Label" parent="."]
+layout_mode = 0
+offset_left = 591.0
+offset_top = 63.0
+offset_right = 631.0
+offset_bottom = 86.0
+
+[node name="Multiplier" type="Label" parent="."]
+layout_mode = 0
+offset_left = 555.0
+offset_top = 164.0
+offset_right = 595.0
+offset_bottom = 187.0
+
+[node name="Points" type="Label" parent="."]
+layout_mode = 0
+offset_left = 625.0
+offset_top = 139.0
+offset_right = 692.0
+offset_bottom = 162.0
+text = "Points: 0"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 0.53333336)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "You Lost!"
+horizontal_alignment = 1
+
+[node name="Restart" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "RESTART!"
+
+[connection signal="pressed" from="Submit" to="." method="_on_submit_pressed"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/Restart" to="." method="_on_restart_pressed"]

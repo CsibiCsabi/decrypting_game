@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4rvfm1x7xgbl"]
+
+[ext_resource type="Script" uid="uid://63u2fpensope" path="res://main_menu.gd" id="1_06t4h"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_06t4h")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 56.0
+offset_bottom = 79.0
+grow_horizontal = 2
+text = "INSERT COOL GAME NAME"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 262.0
+offset_right = 608.0
+offset_bottom = 293.0
+text = "START"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
