@@ -17,16 +17,19 @@ var sentences = [
 	"d e"
 ]
 var words = {
-	"a" : "a",
-	"b" : "b",
-	"c" : "c",
-	"d" : "d",
-	"e" : "e"
+	"a" : "q",
+	"b" : "w",
+	"c" : "e",
+	"d" : "r",
+	"e" : "t"
 }
 
 var message1 = "I love moonshot"
 var message2 = "Hello world"
 var task = "Hello Moonshot"
+
+var decrypting = false
+
 func _ready() -> void:
 	new_task()
 	update()
@@ -62,20 +65,35 @@ func update():
 	$Gibberish1.text = crypt(message1)
 	$Gibberish2.text = crypt(message2)
 	$Gibberish2.text = crypt(message2)
-	$Task.text = crypt(task)
+	if decrypting:
+		$Task.text = crypt(task)
+	else:
+		$Task.text = task
 	$Points.text = "Points: " + str(Gs.points)
 
 func checkAnswer():
-	var correct_answer = task.to_lower().strip_edges()
-	var answer = ($TextEdit.text).to_lower().strip_edges()
-	if correct_answer == answer:
-		Gs.points += 10 * Gs.multiplier
-		$Bar.scale.y += 0.3
+	if decrypting:
+		var correct_answer = task.to_lower().strip_edges()
+		var answer = ($TextEdit.text).to_lower().strip_edges()
+		if correct_answer == answer:
+			Gs.points += 10 * Gs.multiplier
+			$Bar.scale.y += 0.3
+		else:
+			Gs.lose_hp(1)
+			if Gs.lives <= 0:
+				$ColorRect.visible = true
+		$TextEdit.text = ""
 	else:
-		Gs.lose_hp(1)
-		if Gs.lives <= 0:
-			$ColorRect.visible = true
-	$TextEdit.text = ""
+		var correct_answer = crypt(task).to_lower().strip_edges()
+		var answer = ($TextEdit.text).to_lower().strip_edges()
+		if correct_answer == answer:
+			Gs.points += 10 * Gs.multiplier
+			$Bar.scale.y += 0.3
+		else:
+			Gs.lose_hp(1)
+			if Gs.lives <= 0:
+				$ColorRect.visible = true
+		$TextEdit.text = ""
 
 func new_task():
 	sentences.shuffle()
