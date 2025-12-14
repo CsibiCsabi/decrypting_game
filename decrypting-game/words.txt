@@ -1,14 +1,35 @@
+
 var sentences = [
-	"Hello world",
 	"I love moonshot",
+	"Hack the system",
+	"Join hack club",
+	"Moonshot build",
+	"Smart system",
+	"Build moonshot",
+	"Every step",
+	"Club of builders",
+	"Hack and build",
+	"Smart Moonshot",
+	"System in steps",
+]
+var task_sentences = [
+	"love Moonshot",
+	"Hack the system",
+	"Join Hack Club",
+	"Moonshot build",
+	"Build Moonshot",
+	"Club Hack",
+	"Hack and build",
 	"Hello Moonshot",
 ]
 var words = {
-	"hack": "PLG",
-	"club": "JST",
-	"moonshot": "GHES",
-	"step": "NMG",
-	"smart": "JID",
-	"build": "DLD",
-	"system": "YND",
+	"Hello": "GAVK",
+	"hack": "GAVK",
+	"of": "OV",
+	"club": "VLUM",
+	"moonshot": "GHGES",
+	"start": "DRST",
+	"love": "LIME",
+	"build": "VYILD",
+	"system": "STTM",
 }
