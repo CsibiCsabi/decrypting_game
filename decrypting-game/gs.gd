@@ -1,11 +1,9 @@
 extends Node
 
-var lives = 5
-
+var start_lives: int = 5
+var lives: int = start_lives
 var multiplier : float = 1
-
 var points : int = 0
-
 var highScore = 0
 
 func lose_hp(amount : int):
@@ -23,10 +21,14 @@ func refresh():
 func checkHighScore():
 	if points > highScore:
 		highScore = points
-		
-	
+
+
+func checkifend():
+	if Gs.lives <= 0:
+		end()
 
 func end():
 	checkHighScore()
-	#go to end screen!
-	print("end stuff...")
+	lives = start_lives
+	get_tree().change_scene_to_file("res://end_screen.tscn")
+	print("ended")
