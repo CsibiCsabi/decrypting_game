@@ -74,6 +74,7 @@ var time_left = 60
 func _ready() -> void:
 	game_over_overlay.visible = false
 	bar_rect.scale.y = 0.4
+	$Margin/Layout/StatusBar/Timer
 	new_task()
 	update()
 
@@ -90,7 +91,8 @@ func _process(delta: float) -> void:
 		time_left -=1
 		$Margin/Layout/StatusBar/Timer.text = str(time_left)
 		timer = 0
-	
+	if time_left <= 0:
+		get_tree().change_scene_to_file("res://end_screen.tscn")
 
 func crypt(sentence : String):
 	var list = sentence.split(" ")
@@ -115,7 +117,7 @@ func update():
 	hp_label.text = "lives: "
 	for i in range(Gs.lives):
 		hp_label.text += "● "
-	multiplier_label.text = "x" + str(Gs.multiplier)
+	multiplier_label.text = "x" + str("%0.2f" % Gs.multiplier)
 	points_label.text = "Points: " + str(Gs.points)
 	english1_label.text = message1
 	english2_label.text = message2
@@ -128,6 +130,7 @@ func update():
 	
 	answer_field.clear()
 	call_deferred("focus_up")
+
 func focus_up():
 	answer_field.grab_focus()
 func checkAnswer():
@@ -141,7 +144,8 @@ func checkAnswer():
 		else:
 			Gs.lose_hp(1)
 			if Gs.lives <= 0:
-				game_over_overlay.visible = true
+				get_tree().change_scene_to_file("res://end_screen.tscn")
+				
 	else:
 		var correct_answer = crypt(task).to_lower().strip_edges()
 		if correct_answer == answer:
