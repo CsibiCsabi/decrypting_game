@@ -1,0 +1,14 @@
+var sentences = [
+	"Hello world",
+	"I love moonshot",
+	"Hello Moonshot",
+]
+var words = {
+	"hack": "PLG",
+	"club": "JST",
+	"moonshot": "GHES",
+	"step": "NMG",
+	"smart": "JID",
+	"build": "DLD",
+	"system": "YND",
+}
