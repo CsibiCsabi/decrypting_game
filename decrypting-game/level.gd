@@ -12,19 +12,49 @@ extends Control
 @onready var bar_rect: ColorRect = %Bar
 
 var sentences = [
-	"I love Moonshot",
-	"Hack the system",
-	"Join hack club",
-	"Moonshot build",
-	"Smart system",
-	"Build Moonshot",
-	"Every step",
-	"Club of builders",
-	"Hack and build",
-	"Smart Moonshot",
-	"System in steps",
+	"I BUILD AND CREATE THE FUTURE",
+	"YOU DESIGN AND CODE THE PROJECT",
+	"YOU BUILD THE PROJECT AND WIN MOONSHOT",
+	"I DESIGN THE WORLD AND THE FUTURE",
+	"CREATE PROJECT AND SOLVE PROBLEM",
+	"YOU AND I WIN MOONSHOT",
+	"HACK CLUB IS LOVE",
+	"BUILD HACK CLUB TEAM PROJECT"
 ]
+var words = {
+	# Pronouns
+	"I": "E", #3
+	"YOU": "Y", #3
+	
+	# Hackathon theme
+	"MOONSHOT": "BAGES", #2
+	"HACK": "GAVK", #2
+	"CLUB": "VLUM", #2
+	
+	# Essential verbs
+	"BUILD": "BRUD", #3
+	"CREATE": "KREET", #2
+	"CODE": "KOD", #1
+	"DESIGN": "DEZIN", #2
+	"SOLVE": "ZOOV", # 1
+	"WIN": "W", # 2
+	"LOVE" : "HERT", # 1
+	
+	# Nouns
+	"WORLD": "ALMA", #1
+	"TEAM": "TEM", #1
+	"PROJECT": "BROV", #4
+	"FUTURE": "QUTR", #2
+	"PROBLEM" : "BRLOM", #1
+	
+	# Connectors
+	"AND": "N", #6
+	"THE": "E", #5
+	"IS" : "S" #1
+}
+
 var task_sentences = [
+	"BUILD AND CREATE",
 	"love Moonshot",
 	"Hack the system",
 	"Join Hack Club",
@@ -34,17 +64,9 @@ var task_sentences = [
 	"Hack and build",
 	"Hello Moonshot",
 ]
-var words = {
-	"Hello": "GAVK",
-	"hack": "GAVK",
-	"of": "OV",
-	"club": "VLUM",
-	"moonshot": "NOOMTOP",
-	"start": "DRST",
-	"love": "LIME",
-	"build": "VYILD",
-	"system": "STTM",
-}
+
+
+
 
 var message1 = "I love Moonshot"
 var message2 = "Hello world"
@@ -54,11 +76,11 @@ var decrypting = false
 
 var increase_amount = 0.4
 var timer = 0
-var time_left = 60
+var time_left = 90
 
 func _ready() -> void:
 	bar_rect.scale.y = 0.4
-	$Margin/Layout/StatusBar/Timer
+	$Margin/Layout/StatusBar/Timer.text = str(time_left)
 	new_task()
 	update()
 
@@ -68,6 +90,8 @@ func _input(event: InputEvent) -> void:
 		new_task()
 
 func _process(delta: float) -> void:
+	if bar_rect.scale.y >= 1:
+		print("something cool!!")
 	if bar_rect.scale.y > 0.05:
 		bar_rect.scale.y -= delta / 40
 	timer += delta
@@ -138,7 +162,14 @@ func checkAnswer():
 			Gs.lose_hp(1)
 			Gs.checkifend()
 
+
 func new_task():
+	decrypting = randi() % 4 > 0
+	if decrypting:
+		$Margin/Layout/Content/PuzzleSection/PuzzleVBox/DecodeTitle.text = "Decrypt this!"
+	else:
+		$Margin/Layout/Content/PuzzleSection/PuzzleVBox/DecodeTitle.text = "Crypt this!"
+		
 	answer_field.editable = false
 	
 	var attempts := 0
