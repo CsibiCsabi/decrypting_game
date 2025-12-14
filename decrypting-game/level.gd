@@ -67,8 +67,13 @@ var task = "Hello Moonshot"
 
 var decrypting = false
 
+var increase_amount = 0.4
+var timer = 0
+var time_left = 60
+
 func _ready() -> void:
 	game_over_overlay.visible = false
+	bar_rect.scale.y = 0.4
 	new_task()
 	update()
 
@@ -79,7 +84,13 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	if bar_rect.scale.y > 0.05:
-		bar_rect.scale.y -= delta / 10
+		bar_rect.scale.y -= delta / 40
+	timer += delta
+	if timer >= 1:
+		time_left -=1
+		$Margin/Layout/StatusBar/Timer.text = str(time_left)
+		timer = 0
+	
 
 func crypt(sentence : String):
 	var list = sentence.split(" ")
@@ -119,7 +130,6 @@ func update():
 	call_deferred("focus_up")
 func focus_up():
 	answer_field.grab_focus()
-
 func checkAnswer():
 	var answer = (answer_field.text).to_lower().strip_edges()
 	answer_field.text = ""
@@ -127,7 +137,7 @@ func checkAnswer():
 		var correct_answer = task.to_lower().strip_edges()
 		if correct_answer == answer:
 			Gs.points += 10 * Gs.multiplier
-			bar_rect.scale.y += 0.3
+			bar_rect.scale.y += increase_amount
 		else:
 			Gs.lose_hp(1)
 			if Gs.lives <= 0:
