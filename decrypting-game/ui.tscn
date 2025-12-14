@@ -123,12 +123,6 @@ theme_override_constants/h_separation = 18
 theme_override_constants/v_separation = 10
 columns = 2
 
-[node name="English1" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "THE RIVER RUNS QUIET"
-
 [node name="Gibberish1" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -138,11 +132,11 @@ theme_override_fonts/font = SubResource("2")
 text = "QEZ   NOL   VRAJ   LAM"
 uppercase = true
 
-[node name="English2" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
+[node name="English1" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "SILENCE HIDES THE PATTERN"
+text = "THE RIVER RUNS QUIET"
 
 [node name="Gibberish2" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
 unique_name_in_owner = true
@@ -152,6 +146,12 @@ theme_override_colors/font_color = Color(0.32, 0.72, 0.93, 1)
 theme_override_fonts/font = SubResource("2")
 text = "TRM   ISA   GOL   VEK"
 uppercase = true
+
+[node name="English2" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SILENCE HIDES THE PATTERN"
 
 [node name="PuzzleSection" type="MarginContainer" parent="Margin/Layout/Content"]
 layout_mode = 2
