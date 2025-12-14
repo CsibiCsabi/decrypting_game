@@ -60,7 +60,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.87, 0.92, 1)
 theme_override_fonts/font = SubResource("2")
 theme_override_font_sizes/font_size = 20
-text = "02:58"
+text = "60"
 
 [node name="SpacerLeft" type="Control" parent="Margin/Layout/StatusBar"]
 layout_mode = 2
@@ -230,37 +230,4 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(1, 0.24705882, 0.1254902, 1)
 
-[node name="GameOverOverlay" type="ColorRect" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.7, 0, 0.1, 0.53333336)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameOverOverlay"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 12
-alignment = 1
-
-[node name="Label" type="Label" parent="GameOverOverlay/VBoxContainer"]
-layout_mode = 2
-text = "You Lost!"
-horizontal_alignment = 1
-
-[node name="Restart" type="Button" parent="GameOverOverlay/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-text = "RESTART!"
-
 [connection signal="pressed" from="Margin/Layout/Content/InputSection/InputVBox/InputRow/Submit" to="." method="_on_submit_pressed"]
-[connection signal="pressed" from="GameOverOverlay/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
