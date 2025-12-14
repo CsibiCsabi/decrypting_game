@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbnylkp3wrhws"]
+[gd_scene load_steps=2 format=3 uid="uid://4j30q1oqr2oh"]
 
 [ext_resource type="Script" uid="uid://d3ykhtvm8chve" path="res://end_screen.gd" id="1_my301"]
 
@@ -11,25 +11,72 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_my301")
 
-[node name="Score" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.06, 0.07, 0.1, 1)
 
-[node name="HighScore" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="RestartButton" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Layout" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+alignment = 1
 
-[node name="MainMenuButton" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Margin" type="MarginContainer" parent="Margin/Layout"]
+layout_mode = 2
+theme_override_constants/margin_left = 400
+theme_override_constants/margin_right = 400
 
-[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[node name="Content" type="VBoxContainer" parent="Margin/Layout/Margin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Margin/Layout/Margin/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Score" type="Label" parent="Margin/Layout/Margin/Content/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SCORE: 000"
+horizontal_alignment = 1
+
+[node name="HighScore" type="Label" parent="Margin/Layout/Margin/Content/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "HIGH SCORE: 000"
+horizontal_alignment = 1
+
+[node name="MainMenuButton" type="Button" parent="Margin/Layout/Margin/Content"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="RestartButton" type="Button" parent="Margin/Layout/Margin/Content"]
+layout_mode = 2
+text = "Restart"
+
+[connection signal="pressed" from="Margin/Layout/Margin/Content/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="Margin/Layout/Margin/Content/RestartButton" to="." method="_on_restart_button_pressed"]
