@@ -72,6 +72,11 @@ func _ready() -> void:
 	new_task()
 	update()
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("submit"):
+		checkAnswer()
+		new_task()
+
 func _process(delta: float) -> void:
 	if bar_rect.scale.y > 0.05:
 		bar_rect.scale.y -= delta / 10
@@ -96,7 +101,9 @@ func decrypt(crypt : String):
 	return (sentence.strip_edges())
 
 func update():
-	hp_label.text = str(Gs.lives)
+	hp_label.text = "lives: "
+	for i in range(Gs.lives):
+		hp_label.text += "● "
 	multiplier_label.text = "x" + str(Gs.multiplier)
 	points_label.text = "Points: " + str(Gs.points)
 	english1_label.text = message1
@@ -107,6 +114,11 @@ func update():
 		task_label.text = crypt(task)
 	else:
 		task_label.text = task
+	
+	answer_field.clear()
+	call_deferred("focus_up")
+func focus_up():
+	answer_field.grab_focus()
 
 func checkAnswer():
 	var answer = (answer_field.text).to_lower().strip_edges()
@@ -131,6 +143,8 @@ func checkAnswer():
 				game_over_overlay.visible = true
 
 func new_task():
+	answer_field.editable = false
+	
 	var attempts := 0
 	var found := false
 	while attempts < 10 and not found:
@@ -144,10 +158,12 @@ func new_task():
 			if candidate_words.all(func(word): return word in known_words):
 				task = sentences[i]
 				found = true
-				break
 		attempts += 1
 	if not found:
+		print("something went wrong")
 		task = message1
+	answer_field.editable = true
+	answer_field.grab_focus()
 	update()
 
 
