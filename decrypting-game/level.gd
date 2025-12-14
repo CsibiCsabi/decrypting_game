@@ -9,16 +9,15 @@ extends Control
 @onready var task_label: Label = %Task
 @onready var answer_field: LineEdit = %TextEdit
 @onready var points_label: Label = %Points
-@onready var game_over_overlay: ColorRect = %GameOverOverlay
 @onready var bar_rect: ColorRect = %Bar
 
 var sentences = [
-	"I love moonshot",
+	"I love Moonshot",
 	"Hack the system",
 	"Join hack club",
 	"Moonshot build",
 	"Smart system",
-	"Build moonshot",
+	"Build Moonshot",
 	"Every step",
 	"Club of builders",
 	"Hack and build",
@@ -40,14 +39,14 @@ var words = {
 	"hack": "GAVK",
 	"of": "OV",
 	"club": "VLUM",
-	"moonshot": "GHGES",
+	"moonshot": "NOOMTOP",
 	"start": "DRST",
 	"love": "LIME",
 	"build": "VYILD",
 	"system": "STTM",
 }
 
-var message1 = "I love moonshot"
+var message1 = "I love Moonshot"
 var message2 = "Hello world"
 var task = "Hello Moonshot"
 
@@ -58,7 +57,6 @@ var timer = 0
 var time_left = 60
 
 func _ready() -> void:
-	game_over_overlay.visible = false
 	bar_rect.scale.y = 0.4
 	$Margin/Layout/StatusBar/Timer
 	new_task()
@@ -129,8 +127,7 @@ func checkAnswer():
 			bar_rect.scale.y += increase_amount
 		else:
 			Gs.lose_hp(1)
-			if Gs.lives <= 0:
-				get_tree().change_scene_to_file("res://end_screen.tscn")
+			Gs.checkifend()
 				
 	else:
 		var correct_answer = crypt(task).to_lower().strip_edges()
@@ -139,8 +136,7 @@ func checkAnswer():
 			bar_rect.scale.y += 0.3
 		else:
 			Gs.lose_hp(1)
-			if Gs.lives <= 0:
-				game_over_overlay.visible = true
+			Gs.checkifend()
 
 func new_task():
 	answer_field.editable = false
@@ -174,6 +170,5 @@ func _on_submit_pressed() -> void:
 
 
 func _on_restart_pressed() -> void:
-	game_over_overlay.visible = false
 	Gs.restart()
 	update()
