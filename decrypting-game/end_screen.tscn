@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://4j30q1oqr2oh"]
+[gd_scene load_steps=4 format=3 uid="uid://4j30q1oqr2oh"]
 
 [ext_resource type="Script" uid="uid://d3ykhtvm8chve" path="res://end_screen.gd" id="1_my301"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_my301"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.41598046, 0.41598043, 0.4159804, 0.75686276)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="Theme" id="Theme_my301"]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/styles/normal = SubResource("StyleBoxFlat_my301")
 
 [node name="EndScreen" type="Control"]
 layout_mode = 3
@@ -72,10 +88,12 @@ horizontal_alignment = 1
 
 [node name="MainMenuButton" type="Button" parent="Margin/Layout/Margin/Content"]
 layout_mode = 2
+theme = SubResource("Theme_my301")
 text = "Main Menu"
 
 [node name="RestartButton" type="Button" parent="Margin/Layout/Margin/Content"]
 layout_mode = 2
+theme = SubResource("Theme_my301")
 text = "Restart"
 
 [connection signal="pressed" from="Margin/Layout/Margin/Content/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

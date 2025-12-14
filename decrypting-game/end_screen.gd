@@ -5,6 +5,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	print(Gs.points)
 	score.text = "Score: " + str(Gs.points)
 	high_score.text = "High Score: " + str(Gs.highScore)
 

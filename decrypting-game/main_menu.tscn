@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4rvfm1x7xgbl"]
+[gd_scene load_steps=6 format=3 uid="uid://b4rvfm1x7xgbl"]
 
 [ext_resource type="Script" uid="uid://63u2fpensope" path="res://main_menu.gd" id="1_06t4h"]
 
@@ -8,6 +8,22 @@ font_names = PackedStringArray("Inter", "Noto Sans", "Helvetica", "Arial", "Sans
 [sub_resource type="Theme" id="5"]
 default_font = SubResource("1")
 default_font_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_my301"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.41598046, 0.41598043, 0.4159804, 0.75686276)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="Theme" id="Theme_06t4h"]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/styles/normal = SubResource("StyleBoxFlat_my301")
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -67,6 +83,7 @@ horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="Margin/Layout/Margin/Content"]
 layout_mode = 2
+theme = SubResource("Theme_06t4h")
 text = "START"
 
 [connection signal="pressed" from="Margin/Layout/Margin/Content/Button" to="." method="_on_button_pressed"]
