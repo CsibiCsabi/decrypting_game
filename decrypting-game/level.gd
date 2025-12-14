@@ -1,27 +1,64 @@
 extends Control
 
-
-
+@onready var hp_label: Label = %Hp
+@onready var multiplier_label: Label = %Multiplier
+@onready var english1_label: Label = %English1
+@onready var english2_label: Label = %English2
+@onready var gibberish1_label: Label = %Gibberish1
+@onready var gibberish2_label: Label = %Gibberish2
+@onready var task_label: Label = %Task
+@onready var answer_field: LineEdit = %TextEdit
+@onready var points_label: Label = %Points
+@onready var game_over_overlay: ColorRect = %GameOverOverlay
+@onready var bar_rect: ColorRect = %Bar
 
 var sentences = [
-	"a b c",
-	"b c d",
-	"c d e",
-	"d e a",
-	"e a b",
-	"a b",
-	"a c",
-	"a d",
-	"c d",
-	"b e",
-	"d e"
+	"this game is simple",
+	"logic is the pattern",
+	"the rule is clear",
+	"player learn the rule",
+	"player test the code",
+	"risk is a cost",
+	"reward is the goal",
+	"the move is the next step",
+	"smart player build the system",
+	"the system is stable",
+	"focus make the mind ready",
+	"the code is complex"
 ]
 var words = {
-	"a" : "q",
-	"b" : "w",
-	"c" : "e",
-	"d" : "r",
-	"e" : "t"
+	"is": "IS",
+	"the": "THE",
+	"a": "A",
+	"this": "THS",
+	"that": "THT",
+	"it": "IT",
+	"game": "GAM",
+	"simple": "SMP",
+	"logic": "LGC",
+	"pattern": "PTN",
+	"rule": "RUL",
+	"clear": "CLR",
+	"player": "PLR",
+	"learn": "LRN",
+	"test": "TST",
+	"code": "COD",
+	"risk": "RSK",
+	"cost": "CST",
+	"reward": "RWD",
+	"goal": "GOL",
+	"move": "MOV",
+	"next": "NXT",
+	"step": "STP",
+	"smart": "SMT",
+	"build": "BLD",
+	"system": "SYS",
+	"stable": "STB",
+	"focus": "FCS",
+	"make": "MK",
+	"mind": "MND",
+	"ready": "RDY",
+	"complex": "CPX"
 }
 
 var message1 = "I love moonshot"
@@ -31,21 +68,22 @@ var task = "Hello Moonshot"
 var decrypting = false
 
 func _ready() -> void:
+	game_over_overlay.visible = false
 	new_task()
 	update()
 
 func _process(delta: float) -> void:
-	if $Bar.scale.y > 0.05:
-		$Bar.scale.y -= delta / 10
-		
-
+	if bar_rect.scale.y > 0.05:
+		bar_rect.scale.y -= delta / 10
 
 func crypt(sentence : String):
 	var list = sentence.split(" ")
-	print(list)
 	var crypt = ""
 	for i in list:
-		crypt += words[(i.to_lower())] + " "
+		if words.has(i.to_lower()):
+			crypt += words[(i.to_lower())] + " "
+		else:
+			crypt += i + " "
 	return (crypt.strip_edges())
 
 func decrypt(crypt : String):
@@ -58,66 +96,59 @@ func decrypt(crypt : String):
 	return (sentence.strip_edges())
 
 func update():
-	$Hp.text = str(Gs.lives)
-	$Multiplier.text = str(Gs.multiplier)
-	$English1.text = message1
-	$English2.text = message2
-	$Gibberish1.text = crypt(message1)
-	$Gibberish2.text = crypt(message2)
-	$Gibberish2.text = crypt(message2)
+	hp_label.text = str(Gs.lives)
+	multiplier_label.text = "x" + str(Gs.multiplier)
+	points_label.text = "Points: " + str(Gs.points)
+	english1_label.text = message1
+	english2_label.text = message2
+	gibberish1_label.text = crypt(message1)
+	gibberish2_label.text = crypt(message2)
 	if decrypting:
-		$Task.text = crypt(task)
+		task_label.text = crypt(task)
 	else:
-		$Task.text = task
-	$Points.text = "Points: " + str(Gs.points)
+		task_label.text = task
 
 func checkAnswer():
+	var answer = (answer_field.text).to_lower().strip_edges()
+	answer_field.text = ""
 	if decrypting:
 		var correct_answer = task.to_lower().strip_edges()
-		var answer = ($TextEdit.text).to_lower().strip_edges()
 		if correct_answer == answer:
 			Gs.points += 10 * Gs.multiplier
-			$Bar.scale.y += 0.3
+			bar_rect.scale.y += 0.3
 		else:
 			Gs.lose_hp(1)
 			if Gs.lives <= 0:
-				$ColorRect.visible = true
-		$TextEdit.text = ""
+				game_over_overlay.visible = true
 	else:
 		var correct_answer = crypt(task).to_lower().strip_edges()
-		var answer = ($TextEdit.text).to_lower().strip_edges()
 		if correct_answer == answer:
 			Gs.points += 10 * Gs.multiplier
-			$Bar.scale.y += 0.3
+			bar_rect.scale.y += 0.3
 		else:
 			Gs.lose_hp(1)
 			if Gs.lives <= 0:
-				$ColorRect.visible = true
-		$TextEdit.text = ""
+				game_over_overlay.visible = true
 
 func new_task():
-	sentences.shuffle()
-	
-	message1 = sentences[0]
-	message2 = sentences[1]
-	var known_words = message1.split(" ")
-	known_words.append_array(message2.split(" "))
-	var taskFound = false
-	var i = 2
-	while i < len(sentences) and not taskFound:
-		var good = true
-		for word in sentences[i].split(" "):
-			if word not in known_words:
-				good = false
-		if good:
-			print("good task")
-			taskFound = true
-			task = sentences[i]
-			update()
-		i+=1
-	if not taskFound:
-		print("somethin went wrong!!")
-		update()
+	var attempts := 0
+	var found := false
+	while attempts < 10 and not found:
+		sentences.shuffle()
+		message1 = sentences[0]
+		message2 = sentences[1]
+		var known_words: Array = message1.split(" ")
+		known_words.append_array(message2.split(" "))
+		for i in range(2, len(sentences)):
+			var candidate_words: Array = sentences[i].split(" ")
+			if candidate_words.all(func(word): return word in known_words):
+				task = sentences[i]
+				found = true
+				break
+		attempts += 1
+	if not found:
+		task = message1
+	update()
 
 
 func _on_submit_pressed() -> void:
@@ -127,6 +158,6 @@ func _on_submit_pressed() -> void:
 
 
 func _on_restart_pressed() -> void:
-	$ColorRect.visible = false
+	game_over_overlay.visible = false
 	Gs.restart()
 	update()

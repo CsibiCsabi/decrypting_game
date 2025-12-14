@@ -1,0 +1,266 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3hyo1pvcocxf"]
+
+[ext_resource type="Script" uid="uid://tmprijewjdgt" path="res://level.gd" id="1_xkkee"]
+
+[sub_resource type="SystemFont" id="1"]
+font_names = PackedStringArray("Inter", "Noto Sans", "Helvetica", "Arial", "Sans")
+
+[sub_resource type="Theme" id="5"]
+default_font = SubResource("1")
+default_font_size = 18
+
+[sub_resource type="SystemFont" id="2"]
+font_names = PackedStringArray("JetBrains Mono", "Fira Code", "Consolas", "Monospace")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("5")
+script = ExtResource("1_xkkee")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.06, 0.07, 0.1, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Layout" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="StatusBar" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Timer" type="Label" parent="Margin/Layout/StatusBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.87, 0.92, 1)
+theme_override_fonts/font = SubResource("2")
+theme_override_font_sizes/font_size = 20
+text = "02:58"
+
+[node name="SpacerLeft" type="Control" parent="Margin/Layout/StatusBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Multiplier" type="Label" parent="Margin/Layout/StatusBar"]
+layout_mode = 2
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 22
+text = "x3"
+horizontal_alignment = 1
+
+[node name="SpacerRight" type="Control" parent="Margin/Layout/StatusBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Hp" type="Label" parent="Margin/Layout/StatusBar"]
+layout_mode = 2
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 18
+text = "Lives: ● ● ● ● ●"
+horizontal_alignment = 2
+
+[node name="Points" type="Label" parent="Margin/Layout/StatusBar"]
+layout_mode = 2
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 18
+text = "Points: 0"
+horizontal_alignment = 2
+
+[node name="Content" type="VBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="KnownSentences" type="MarginContainer" parent="Margin/Layout/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="KnownVBox" type="VBoxContainer" parent="Margin/Layout/Content/KnownSentences"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="KnownTitle" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.72, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = "KNOWN SENTENCES"
+
+[node name="KnownGrid" type="GridContainer" parent="Margin/Layout/Content/KnownSentences/KnownVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="English1" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+unique_name_in_owner = true
+text = "THE RIVER RUNS QUIET"
+
+[node name="Gibberish1" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.32, 0.72, 0.93, 1)
+theme_override_fonts/font = SubResource("2")
+text = "QEZ   NOL   VRAJ   LAM"
+uppercase = true
+
+[node name="English2" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+unique_name_in_owner = true
+text = "SILENCE HIDES THE PATTERN"
+
+[node name="Gibberish2" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.32, 0.72, 0.93, 1)
+theme_override_fonts/font = SubResource("2")
+text = "TRM   ISA   GOL   VEK"
+uppercase = true
+
+[node name="PuzzleSection" type="MarginContainer" parent="Margin/Layout/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="PuzzleVBox" type="VBoxContainer" parent="Margin/Layout/Content/PuzzleSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="DecodeTitle" type="Label" parent="Margin/Layout/Content/PuzzleSection/PuzzleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.72, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = "DECODE THIS"
+
+[node name="TokenRow" type="HBoxContainer" parent="Margin/Layout/Content/PuzzleSection/PuzzleVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="Task" type="Label" parent="Margin/Layout/Content/PuzzleSection/PuzzleVBox/TokenRow"]
+layout_mode = 2
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.32, 0.72, 0.93, 1)
+theme_override_fonts/font = SubResource("2")
+theme_override_font_sizes/font_size = 28
+text = "NGY   TRM   ZAE"
+uppercase = true
+
+[node name="InputSection" type="MarginContainer" parent="Margin/Layout/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="InputVBox" type="VBoxContainer" parent="Margin/Layout/Content/InputSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="InputRow" type="HBoxContainer" parent="Margin/Layout/Content/InputSection/InputVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="TextEdit" type="LineEdit" parent="Margin/Layout/Content/InputSection/InputVBox/InputRow"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+unique_name_in_owner = true
+placeholder_text = "Enter the decoded sentence"
+
+[node name="Submit" type="Button" parent="Margin/Layout/Content/InputSection/InputVBox/InputRow"]
+layout_mode = 2
+text = "SUBMIT!"
+
+[node name="Bar" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_right = -8.0
+offset_top = 24.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 2
+unique_name_in_owner = true
+color = Color(1, 0.24705882, 0.1254902, 1)
+
+[node name="GameOverOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+unique_name_in_owner = true
+color = Color(0.7, 0, 0.1, 0.53333336)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+text = "You Lost!"
+horizontal_alignment = 1
+
+[node name="Restart" type="Button" parent="GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+unique_name_in_owner = true
+size_flags_horizontal = 4
+text = "RESTART!"
+
+[connection signal="pressed" from="Margin/Layout/Content/InputSection/InputVBox/InputRow/Submit" to="." method="_on_submit_pressed"]
+[connection signal="pressed" from="GameOverOverlay/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
