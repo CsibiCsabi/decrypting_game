@@ -18,7 +18,7 @@ var sentences = [
 	"I DESIGN THE WORLD AND THE FUTURE",
 	"CREATE PROJECT AND SOLVE PROBLEM",
 	"YOU AND I WIN MOONSHOT",
-	"HACK CLUB IS LOVE",
+	"HACK CLUB IS THE FUTURE",
 	"BUILD HACK CLUB TEAM PROJECT"
 ]
 var words = {
@@ -55,14 +55,14 @@ var words = {
 
 var task_sentences = [
 	"BUILD AND CREATE",
+	"MOONSHOT PROJECT",
+	"SOLVE PROBLEM",
+	"CODE PROJECT",
+	"BUILD THE FUTURE",
+	"YOU WIN MOONSHOT",
 	"love Moonshot",
-	"Hack the system",
-	"Join Hack Club",
-	"Moonshot build",
-	"Build Moonshot",
-	"Club Hack",
-	"Hack and build",
-	"Hello Moonshot",
+	"HACK CLUB",
+	"I SOLVE PROBLEM",
 ]
 
 
@@ -106,8 +106,8 @@ func crypt(sentence : String):
 	var list = sentence.split(" ")
 	var crypt = ""
 	for i in list:
-		if words.has(i.to_lower()):
-			crypt += words[(i.to_lower())] + " "
+		if words.has(i.to_upper()):
+			crypt += words[(i.to_upper())] + " "
 		else:
 			crypt += i + " "
 	return (crypt.strip_edges())
@@ -176,14 +176,15 @@ func new_task():
 	var found := false
 	while attempts < 10 and not found:
 		sentences.shuffle()
+		task_sentences.shuffle()
 		message1 = sentences[0]
 		message2 = sentences[1]
 		var known_words: Array = message1.split(" ")
 		known_words.append_array(message2.split(" "))
-		for i in range(2, len(sentences)):
-			var candidate_words: Array = sentences[i].split(" ")
+		for i in range(2, len(task_sentences)):
+			var candidate_words: Array = task_sentences[i].split(" ")
 			if candidate_words.all(func(word): return word in known_words):
-				task = sentences[i]
+				task = task_sentences[i]
 				found = true
 		attempts += 1
 	if not found:
