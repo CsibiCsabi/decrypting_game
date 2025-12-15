@@ -185,9 +185,6 @@ func checkAnswer():
 		else:
 			Gs.lose_hp(1)
 			Gs.checkifend()
-	if bar_rect.scale.y > 1:
-		bar_rect.scale.y = 0.1
-		Gs.multiplier += 1
 
 
 func new_task():
@@ -237,10 +234,11 @@ func award_bar_full_bonus():
 		return
 	bar_bonus_locked = true
 	Gs.multiplier += 1
-	bar_rect.scale.y = 0.3
+	bar_rect.scale.y = 0.1
 	multiplier_label.text = "x" + str("%0.2f" % Gs.multiplier)
 	animate_multiplier_change()
 	# Unlock after the bar falls back down so it can be earned again.
+	time_left += 10
 	if bar_rect.scale.y < 0.2:
 		bar_bonus_locked = false
 
