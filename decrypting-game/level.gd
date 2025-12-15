@@ -79,6 +79,7 @@ var timer = 0
 var time_left = 90
 
 func _ready() -> void:
+	Gs.restart()
 	bar_rect.scale.y = 0.4
 	$Margin/Layout/StatusBar/Timer.text = str(time_left)
 	new_task()
@@ -100,7 +101,7 @@ func _process(delta: float) -> void:
 		$Margin/Layout/StatusBar/Timer.text = str(time_left)
 		timer = 0
 	if time_left <= 0:
-		get_tree().change_scene_to_file("res://end_screen.tscn")
+		Gs.end()
 
 func crypt(sentence : String):
 	var list = sentence.split(" ")
@@ -141,6 +142,7 @@ func update():
 
 func focus_up():
 	answer_field.grab_focus()
+
 func checkAnswer():
 	var answer = (answer_field.text).to_lower().strip_edges()
 	answer_field.text = ""

@@ -12,11 +12,13 @@ func lose_hp(amount : int):
 
 func restart():
 	lives = 5
+	lives = start_lives
+	points = 0
+	multiplier = 1
 	refresh()
 
 func refresh():
 	multiplier = pow(1.3, (5-lives))
-	print(multiplier)
 
 func checkHighScore():
 	if points > highScore:
@@ -29,6 +31,7 @@ func checkifend():
 
 func end():
 	checkHighScore()
-	lives = start_lives
 	get_tree().change_scene_to_file("res://end_screen.tscn")
 	print("ended")
+
+	
