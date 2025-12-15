@@ -77,10 +77,15 @@ var decrypting = false
 var increase_amount = 0.4
 var timer = 0
 var time_left = 90
+var last_points := -1
+var last_lives := -1
+var last_multiplier := -1.0
+var bar_bonus_locked := false
 
 func _ready() -> void:
 	bar_rect.scale.y = 0.4
 	$Margin/Layout/StatusBar/Timer.text = str(time_left)
+	call_deferred("_cache_pivots")
 	new_task()
 	update()
 
@@ -91,9 +96,11 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	if bar_rect.scale.y >= 1:
-		print("something cool!!")
+		award_bar_full_bonus()
 	if bar_rect.scale.y > 0.05:
 		bar_rect.scale.y -= delta / 40
+	if bar_rect.scale.y < 0.2:
+		bar_bonus_locked = false
 	timer += delta
 	if timer >= 1:
 		time_left -=1
@@ -122,6 +129,9 @@ func decrypt(crypt : String):
 	return (sentence.strip_edges())
 
 func update():
+	var points_changed := last_points != -1 and Gs.points != last_points
+	var lives_changed := last_lives != -1 and Gs.lives != last_lives
+	var multiplier_changed := last_multiplier != -1.0 and not is_equal_approx(Gs.multiplier, last_multiplier)
 	hp_label.text = "lives: "
 	for i in range(Gs.lives):
 		hp_label.text += "● "
@@ -132,12 +142,23 @@ func update():
 	gibberish1_label.text = crypt(message1)
 	gibberish2_label.text = crypt(message2)
 	if decrypting:
+		task_label.add_theme_color_override("font_color", Color(0.32, 0.72, 0.93, 1.0))
 		task_label.text = crypt(task)
 	else:
+		task_label.add_theme_color_override("font_color", Color.WHITE)
 		task_label.text = task
 	
 	answer_field.clear()
 	call_deferred("focus_up")
+	if points_changed:
+		animate_points_change()
+	if lives_changed:
+		animate_lives_change(Gs.lives < last_lives)
+	if multiplier_changed:
+		animate_multiplier_change()
+	last_points = Gs.points
+	last_lives = Gs.lives
+	last_multiplier = Gs.multiplier
 
 func focus_up():
 	answer_field.grab_focus()
@@ -204,3 +225,51 @@ func _on_submit_pressed() -> void:
 func _on_restart_pressed() -> void:
 	Gs.restart()
 	update()
+
+func award_bar_full_bonus():
+	if bar_bonus_locked:
+		return
+	bar_bonus_locked = true
+	Gs.multiplier += 1
+	bar_rect.scale.y = 0.3
+	multiplier_label.text = "x" + str("%0.2f" % Gs.multiplier)
+	animate_multiplier_change()
+	# Unlock after the bar falls back down so it can be earned again.
+	if bar_rect.scale.y < 0.2:
+		bar_bonus_locked = false
+
+func _cache_pivots():
+	var labels: Array = [
+		points_label,
+		hp_label,
+		multiplier_label,
+		task_label,
+		english1_label,
+		english2_label,
+		gibberish1_label,
+		gibberish2_label
+	]
+	for label in labels:
+		label.pivot_offset = label.size / 2
+
+func animate_points_change():
+	var tween := create_tween()
+	tween.tween_property(points_label, "scale", Vector2(1.14, 1.14), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(points_label, "modulate", Color(0.95, 1.0, 0.78, 1.0), 0.12)
+	tween.tween_property(points_label, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tween.tween_property(points_label, "modulate", Color.WHITE, 0.18)
+
+func animate_lives_change(lost_life: bool):
+	var highlight := Color(1.0, 0.55, 0.55, 1.0) if lost_life else Color(0.75, 1.0, 0.85, 1.0)
+	var tween := create_tween()
+	tween.tween_property(hp_label, "scale", Vector2(1.12, 1.12), 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(hp_label, "modulate", highlight, 0.12)
+	tween.tween_property(hp_label, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tween.tween_property(hp_label, "modulate", Color.WHITE, 0.18)
+
+func animate_multiplier_change():
+	var tween := create_tween()
+	tween.tween_property(multiplier_label, "scale", Vector2(1.1, 1.1), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(multiplier_label, "modulate", Color(0.68, 0.93, 1.0, 1.0), 0.16)
+	tween.tween_property(multiplier_label, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tween.tween_property(multiplier_label, "modulate", Color.WHITE, 0.16)
