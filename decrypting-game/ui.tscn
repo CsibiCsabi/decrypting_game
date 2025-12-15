@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3hyo1pvcocxf"]
+[gd_scene load_steps=7 format=3 uid="uid://c3hyo1pvcocxf"]
 
 [ext_resource type="Script" uid="uid://0hhpf0746ixa" path="res://level.gd" id="1_xkkee"]
 
@@ -8,9 +8,6 @@ font_names = PackedStringArray("Inter", "Noto Sans", "Helvetica", "Arial", "Sans
 [sub_resource type="Theme" id="5"]
 default_font = SubResource("1")
 default_font_size = 18
-
-[sub_resource type="SystemFont" id="2"]
-font_names = PackedStringArray("JetBrains Mono", "Fira Code", "Consolas", "Monospace")
 
 [sub_resource type="Animation" id="3"]
 resource_name = "background_flow"
@@ -28,6 +25,14 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(0.06, 0.07, 0.1, 1), Color(0.08, 0.09, 0.12, 1), Color(0.06, 0.07, 0.1, 1)]
 }
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fyqef"]
+_data = {
+&"background_flow": SubResource("3")
+}
+
+[sub_resource type="SystemFont" id="2"]
+font_names = PackedStringArray("JetBrains Mono", "Fira Code", "Consolas", "Monospace")
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -50,9 +55,10 @@ mouse_filter = 2
 color = Color(0.06, 0.07, 0.1, 1)
 
 [node name="BackgroundPlayer" type="AnimationPlayer" parent="Background"]
+libraries = {
+&"": SubResource("AnimationLibrary_fyqef")
+}
 autoplay = "background_flow"
-playback_process_mode = 1
-anims/background_flow = SubResource("3")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -154,12 +160,6 @@ theme_override_fonts/font = SubResource("2")
 text = "QEZ   NOL   VRAJ   LAM"
 uppercase = true
 
-[node name="English1" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "THE RIVER RUNS QUIET"
-
 [node name="Gibberish2" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -168,6 +168,12 @@ theme_override_colors/font_color = Color(0.32, 0.72, 0.93, 1)
 theme_override_fonts/font = SubResource("2")
 text = "TRM   ISA   GOL   VEK"
 uppercase = true
+
+[node name="English1" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "THE RIVER RUNS QUIET"
 
 [node name="English2" type="Label" parent="Margin/Layout/Content/KnownSentences/KnownVBox/KnownGrid"]
 unique_name_in_owner = true

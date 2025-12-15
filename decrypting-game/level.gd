@@ -38,7 +38,6 @@ var words = {
 	"DESIGN": "DEZIN", #2
 	"SOLVE": "ZOOV", # 1
 	"WIN": "W", # 2
-	"LOVE" : "HERT", # 1
 	
 	# Nouns
 	"WORLD": "ALMA", #1
@@ -54,13 +53,15 @@ var words = {
 }
 
 var task_sentences = [
+	"DESIGN MOONSHOT",
+	"YOU BUILD HACK CLUB",
+	"TEAM PROJECT",
 	"BUILD AND CREATE",
 	"MOONSHOT PROJECT",
 	"SOLVE PROBLEM",
 	"CODE PROJECT",
 	"BUILD THE FUTURE",
 	"YOU WIN MOONSHOT",
-	"love Moonshot",
 	"HACK CLUB",
 	"I SOLVE PROBLEM",
 ]
@@ -184,10 +185,13 @@ func checkAnswer():
 		else:
 			Gs.lose_hp(1)
 			Gs.checkifend()
+	if bar_rect.scale.y > 1:
+		bar_rect.scale.y = 0.1
+		Gs.multiplier += 1
 
 
 func new_task():
-	decrypting = randi() % 4 > 0
+	decrypting = randi() % 2 > 0
 	if decrypting:
 		$Margin/Layout/Content/PuzzleSection/PuzzleVBox/DecodeTitle.text = "Decrypt this!"
 	else:
